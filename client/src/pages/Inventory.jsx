@@ -12,7 +12,7 @@ export default function InventoryList() {
     size: "",
     costPrice: "",
     quantity: "",
-    allotted: "", // new field
+    allotted: "",
   });
   const [search, setSearch] = useState("");
 

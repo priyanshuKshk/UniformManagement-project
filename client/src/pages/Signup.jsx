@@ -72,7 +72,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
   if (errorMessage === "User already exists") {
     alert("User already exists. Redirecting to login...");
-    navigate("/login"); // 👈 make sure your route is correct
+    navigate("/login"); 
   } else {
     alert(errorMessage);
   }
