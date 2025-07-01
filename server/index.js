@@ -7,12 +7,18 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://uniformmanagementproject.onrender.com"
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173"||"https://uniformmanagementproject.onrender.com ",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 // MongoDB Connection
