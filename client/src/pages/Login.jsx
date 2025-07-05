@@ -127,14 +127,7 @@ const Login = () => {
 
         </form>
 
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
-            <a href="/signup" className="text-blue-900 hover:underline">
-              Sign Up
-            </a>
-          </p>
-        </div>
+    
       </motion.div>
     </div>)
   );
