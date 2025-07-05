@@ -3,6 +3,7 @@ import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 export default function AddUniform() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     itemName: "",
@@ -14,7 +15,11 @@ export default function AddUniform() {
   });
 
 const handleChange = (e) => {
-  const { name, value } = e.target;
+let { name, value } = e.target;
+if (["costPrice", "quantity", "allotted"].includes(name)) {
+  value = value.replace(/^0+(?=\d)/, ''); // prevent leading zeroes
+}
+
   const updatedForm = { ...form, [name]: value };
 
   // Auto-calculate available and validate
@@ -37,8 +42,9 @@ const handleChange = (e) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const quantity = parseInt(form.quantity) || 0;
-  const allotted = parseInt(form.allotted) || 0;
+  
+  const quantity = parseInt(form.quantity, 10) || 0;
+  const allotted = parseInt(form.allotted, 10) || 0;
 
   // ✅ Validation
   if (quantity < 0) {
@@ -52,7 +58,9 @@ const handleSubmit = async (e) => {
   }
 
   const available = quantity - allotted;
+if (loading) return;
 
+  setLoading(true);
   try {
     await api.post("/uniforms", { ...form, available });
         toast((t) => (
@@ -78,8 +86,10 @@ const handleSubmit = async (e) => {
       available: "",
     });
   } catch (err) {
-    console.error("Error adding uniform:", err);
-    alert("Error adding uniform");
+toast.error("Something went wrong");
+  }
+  finally {
+    setLoading(false);
   }
 };
 
@@ -180,9 +190,10 @@ const handleSubmit = async (e) => {
 
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 rounded-xl transition-all duration-200"
             >
-              Add Uniform
+            {loading ? "Adding..." : "Add Uniform"}
             </button>
           </form>
         </div>

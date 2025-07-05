@@ -4,6 +4,7 @@ import api from "../utils/api";
 import toast from "react-hot-toast";
 
 export default function EditUniform() {
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -16,6 +17,9 @@ export default function EditUniform() {
 
   useEffect(() => {
     const fetchUniform = async () => {
+      if (loading) return;
+
+  setLoading(true);
       try {
         const res = await api.get(`/uniforms/${id}`);
         const data = res.data;
@@ -26,9 +30,10 @@ export default function EditUniform() {
           available: (data.quantity || 0) - (data.allotted || 0),
         });
       } catch (err) {
-        console.error("Error fetching uniform:", err);
         toast.error("Failed to load uniform data");
-      }
+      }finally {
+    setLoading(false);
+  }
     };
 
     fetchUniform();
@@ -131,10 +136,11 @@ const handleChange = (e) => {
         </div>
 
         <button
+          disabled={loading}
           type="submit"
           className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition"
         >
-          Update Uniform
+          {loading ? "Updating..." : "Update Uniform"}
         </button>
       </form>
     </div>
