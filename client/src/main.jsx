@@ -11,7 +11,7 @@ import InventoryDashboard from "./pages/InventoryDashboard";
 import Login from "./pages/Login";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./pages/PrivateRoute";
-
+import './output.css'
 import Signup from "./pages/Signup";
 
 const router = createBrowserRouter([
