@@ -1,13 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiUser, FiMail, FiLock } from "react-icons/fi";
 import { FaPhoneAlt } from "react-icons/fa";
- import { useAuth } from '../context/AuthContext';
- import LoadingSpinner from './LoadingSpinner';
+import { useAuth } from "../context/AuthContext";
+import LoadingSpinner from "./LoadingSpinner";
 import { User } from "lucide-react";
-import api from '../utils/api';
+import api from "../utils/api";
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -22,69 +22,65 @@ const SignUp = () => {
   const { login } = useAuth();
   const handleSignUp = (e) => {
     e.preventDefault();
-setLoading(true);
+    setLoading(true);
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
-      setLoading(false); 
+      setLoading(false);
       return;
     }
-const API_URL = import.meta.env.VITE_API_URL;
+    const API_URL = import.meta.env.VITE_API_URL;
 
-  api
-  .post(
-  `/sign-up` 
-    , {
-    firstName,
-    lastName,
-    phone,
-    email,
-    password,
-  })
-  .then((res) => {
-    const { token, user, message } = res.data;
+    api
+      .post(`/sign-up`, {
+        firstName,
+        lastName,
+        phone,
+        email,
+        password,
+      })
+      .then((res) => {
+        const { token, user, message } = res.data;
 
-    if ( user, message,token) {
-      
-      // ✅ Save the token & user to localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+        if ((user, message, token)) {
+          // ✅ Save the token & user to localStorage
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
 
-      // ✅ Optional: if using context API
-        login(user, token, user.profileImage || "");
+          // ✅ Optional: if using context API
+          login(user, token, user.profileImage || "");
 
-      alert(message || "Signup successful!");
-       setFirstName("");
-        setLastName("");
-        setPhone("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-      navigate("/");
-    } else {
-      alert("Signup failed: No token received");
-    
-    }
-    setLoading(false); 
-  })
-  .catch((err) => {
-  const errorMessage =
-    err.response?.data?.error || err.response?.data?.message || "Signup failed";
+          alert(message || "Signup successful!");
+          setFirstName("");
+          setLastName("");
+          setPhone("");
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+          navigate("/");
+        } else {
+          alert("Signup failed: No token received");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        const errorMessage =
+          err.response?.data?.error ||
+          err.response?.data?.message ||
+          "Signup failed";
 
-  if (errorMessage === "User already exists") {
-    alert("User already exists. Redirecting to login...");
-    navigate("/login"); 
-  } else {
-    alert(errorMessage);
-  }
-  setLoading(false);
-});
-  
-  }
+        if (errorMessage === "User already exists") {
+          alert("User already exists. Redirecting to login...");
+          navigate("/login");
+        } else {
+          alert(errorMessage);
+        }
+        setLoading(false);
+      });
+  };
 
-  return (
-    loading ? (
-  <LoadingSpinner />
-) : (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -110,8 +106,10 @@ const API_URL = import.meta.env.VITE_API_URL;
               <span className="px-3 text-gray-500">
                 <FiUser />
               </span>
-          <div className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
-            style={{width: '100%'}}>
+              <div
+                className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
+                style={{ width: "100%" }}
+              >
                 <input
                   type="text"
                   id="firstName"
@@ -140,8 +138,10 @@ const API_URL = import.meta.env.VITE_API_URL;
               <span className="px-3 text-gray-500">
                 <FiUser />
               </span>
-            <div className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
-            style={{width: '100%'}}>
+              <div
+                className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
+                style={{ width: "100%" }}
+              >
                 <input
                   type="text"
                   id="lastName"
@@ -169,8 +169,10 @@ const API_URL = import.meta.env.VITE_API_URL;
               <span className="px-3 text-gray-500">
                 <FaPhoneAlt />
               </span>
-              <div className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
-              style={{ width: "100%" }}>
+              <div
+                className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
+                style={{ width: "100%" }}
+              >
                 <input
                   type="tel"
                   id="phone"
@@ -198,8 +200,10 @@ const API_URL = import.meta.env.VITE_API_URL;
               <span className="px-3 text-gray-500">
                 <FiMail />
               </span>
-            <div className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
-            style={{ width: "100%" }}>
+              <div
+                className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
+                style={{ width: "100%" }}
+              >
                 <input
                   type="email"
                   id="email"
@@ -227,8 +231,11 @@ const API_URL = import.meta.env.VITE_API_URL;
               <span className="px-3 text-gray-500">
                 <FiLock />
               </span>
-              <div className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden
-              " style={{ width: "100%" }}>
+              <div
+                className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden
+              "
+                style={{ width: "100%" }}
+              >
                 <input
                   type="password"
                   id="password"
@@ -256,13 +263,15 @@ const API_URL = import.meta.env.VITE_API_URL;
               <span className="px-3 text-gray-500">
                 <FiLock />
               </span>
-          <div className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
-            style={{ width: "100%" }}>
+              <div
+                className="flex items-center border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden"
+                style={{ width: "100%" }}
+              >
                 <input
                   type="password"
                   id="confirmPassword"
                   className="p-3 w-full outline-none"
-                    style={{padding: '10px'}}
+                  style={{ padding: "10px" }}
                   value={confirmPassword}
                   placeholder="Confirm your password"
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -277,10 +286,10 @@ const API_URL = import.meta.env.VITE_API_URL;
             whileTap={{ scale: 0.97 }}
             type="submit"
             onClick={handleSignUp}
-              onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
             className="w-full py-3 bg-blue-900 text-white rounded-md hover:bg-blue-600 focus:outline-none transition-all"
-            style={{backgroundColor: hover ? '#0b5394' : '#073763',}}
+            style={{ backgroundColor: hover ? "#0b5394" : "#073763" }}
           >
             Sign Up
           </motion.button>
@@ -295,7 +304,7 @@ const API_URL = import.meta.env.VITE_API_URL;
           </p>
         </div>
       </motion.div>
-    </div>)
+    </div>
   );
 };
 

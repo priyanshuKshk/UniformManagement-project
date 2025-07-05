@@ -19,7 +19,7 @@ export default function EditUniform() {
     const fetchUniform = async () => {
       if (loading) return;
 
-  setLoading(true);
+      setLoading(true);
       try {
         const res = await api.get(`/uniforms/${id}`);
         const data = res.data;
@@ -31,34 +31,36 @@ export default function EditUniform() {
         });
       } catch (err) {
         toast.error("Failed to load uniform data");
-      }finally {
-    setLoading(false);
-  }
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchUniform();
   }, [id]);
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  const updatedForm = { ...form, [name]: value };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const updatedForm = { ...form, [name]: value };
 
-  // Auto-calculate available and validate
-  if (name === "quantity" || name === "allotted") {
-    const quantity = parseInt(name === "quantity" ? value : updatedForm.quantity) || 0;
-    const allotted = parseInt(name === "allotted" ? value : updatedForm.allotted) || 0;
+    // Auto-calculate available and validate
+    if (name === "quantity" || name === "allotted") {
+      const quantity =
+        parseInt(name === "quantity" ? value : updatedForm.quantity) || 0;
+      const allotted =
+        parseInt(name === "allotted" ? value : updatedForm.allotted) || 0;
 
-    if (quantity < 0) {
-      toast.error("Quantity cannot be negative");
-    } else if (allotted > quantity) {
-      toast.error("Allotted cannot exceed Quantity");
+      if (quantity < 0) {
+        toast.error("Quantity cannot be negative");
+      } else if (allotted > quantity) {
+        toast.error("Allotted cannot exceed Quantity");
+      }
+
+      updatedForm.available = Math.max(quantity - allotted, 0);
     }
 
-    updatedForm.available = Math.max(quantity - allotted, 0);
-  }
-
-  setForm(updatedForm);
-};
+    setForm(updatedForm);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,7 +76,9 @@ const handleChange = (e) => {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h2 className="text-2xl font-semibold text-indigo-700 mb-4">Edit Uniform</h2>
+      <h2 className="text-2xl font-semibold text-indigo-700 mb-4">
+        Edit Uniform
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium">Name</label>

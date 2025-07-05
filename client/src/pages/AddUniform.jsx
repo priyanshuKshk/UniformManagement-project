@@ -14,85 +14,84 @@ export default function AddUniform() {
     available: "",
   });
 
-const handleChange = (e) => {
-let { name, value } = e.target;
-if (["costPrice", "quantity", "allotted"].includes(name)) {
-  value = value.replace(/^0+(?=\d)/, ''); // prevent leading zeroes
-}
-
-  const updatedForm = { ...form, [name]: value };
-
-  // Auto-calculate available and validate
-  if (name === "quantity" || name === "allotted") {
-    const quantity = parseInt(name === "quantity" ? value : updatedForm.quantity) || 0;
-    const allotted = parseInt(name === "allotted" ? value : updatedForm.allotted) || 0;
-
-    if (quantity < 0) {
-      toast.error("Quantity cannot be negative");
-    } else if (allotted > quantity) {
-      toast.error("Allotted cannot exceed Quantity");
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    if (["costPrice", "quantity", "allotted"].includes(name)) {
+      value = value.replace(/^0+(?=\d)/, ""); // prevent leading zeroes
     }
 
-    updatedForm.available = Math.max(quantity - allotted, 0);
-  }
+    const updatedForm = { ...form, [name]: value };
 
-  setForm(updatedForm);
-};
+    // Auto-calculate available and validate
+    if (name === "quantity" || name === "allotted") {
+      const quantity =
+        parseInt(name === "quantity" ? value : updatedForm.quantity) || 0;
+      const allotted =
+        parseInt(name === "allotted" ? value : updatedForm.allotted) || 0;
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+      if (quantity < 0) {
+        toast.error("Quantity cannot be negative");
+      } else if (allotted > quantity) {
+        toast.error("Allotted cannot exceed Quantity");
+      }
 
-  
-  const quantity = parseInt(form.quantity, 10) || 0;
-  const allotted = parseInt(form.allotted, 10) || 0;
+      updatedForm.available = Math.max(quantity - allotted, 0);
+    }
 
-  // ✅ Validation
-  if (quantity < 0) {
-    alert("Quantity cannot be negative");
-    return;
-  }
+    setForm(updatedForm);
+  };
 
-  if (allotted > quantity) {
-    alert("Allotted cannot be more than Quantity");
-    return;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const available = quantity - allotted;
-if (loading) return;
+    const quantity = parseInt(form.quantity, 10) || 0;
+    const allotted = parseInt(form.allotted, 10) || 0;
 
-  setLoading(true);
-  try {
-    await api.post("/uniforms", { ...form, available });
-        toast((t) => (
-      <span>
-        Uniform added successfully
-        <button
-          onClick={() => {
-            toast.dismiss(t.id);
-            navigate("/inventory"); 
-          }}
-          className="ml-4 px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700"
-        >
-          OK
-        </button>
-      </span>
-    ));
-    setForm({
-      itemName: "",
-      size: "",
-      costPrice: "",
-      quantity: "",
-      allotted: "",
-      available: "",
-    });
-  } catch (err) {
-toast.error("Something went wrong");
-  }
-  finally {
-    setLoading(false);
-  }
-};
+    // ✅ Validation
+    if (quantity < 0) {
+      alert("Quantity cannot be negative");
+      return;
+    }
 
+    if (allotted > quantity) {
+      alert("Allotted cannot be more than Quantity");
+      return;
+    }
+
+    const available = quantity - allotted;
+    if (loading) return;
+
+    setLoading(true);
+    try {
+      await api.post("/uniforms", { ...form, available });
+      toast((t) => (
+        <span>
+          Uniform added successfully
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              navigate("/inventory");
+            }}
+            className="ml-4 px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700"
+          >
+            OK
+          </button>
+        </span>
+      ));
+      setForm({
+        itemName: "",
+        size: "",
+        costPrice: "",
+        quantity: "",
+        allotted: "",
+        available: "",
+      });
+    } catch (err) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-blue-50 to-purple-100 flex items-center justify-center p-6">
@@ -101,7 +100,8 @@ toast.error("Something went wrong");
         <div className="w-1/2 bg-gradient-to-b from-indigo-500 to-purple-500 text-white p-10 hidden md:flex flex-col justify-center">
           <h2 className="text-3xl font-bold mb-4">Add a New Uniform</h2>
           <p className="text-sm opacity-80">
-            Track your inventory by adding uniforms with their size, cost, quantity, and allotment.
+            Track your inventory by adding uniforms with their size, cost,
+            quantity, and allotment.
           </p>
         </div>
 
@@ -112,7 +112,9 @@ toast.error("Something went wrong");
           </h3>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm mb-1 text-gray-600">Item Name</label>
+              <label className="block text-sm mb-1 text-gray-600">
+                Item Name
+              </label>
               <input
                 name="itemName"
                 value={form.itemName}
@@ -137,7 +139,9 @@ toast.error("Something went wrong");
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm mb-1 text-gray-600">Cost Price</label>
+                <label className="block text-sm mb-1 text-gray-600">
+                  Cost Price
+                </label>
                 <input
                   type="number"
                   name="costPrice"
@@ -150,7 +154,9 @@ toast.error("Something went wrong");
               </div>
 
               <div>
-                <label className="block text-sm mb-1 text-gray-600">Quantity</label>
+                <label className="block text-sm mb-1 text-gray-600">
+                  Quantity
+                </label>
                 <input
                   type="number"
                   name="quantity"
@@ -165,7 +171,9 @@ toast.error("Something went wrong");
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm mb-1 text-gray-600">Allotted</label>
+                <label className="block text-sm mb-1 text-gray-600">
+                  Allotted
+                </label>
                 <input
                   type="number"
                   name="allotted"
@@ -177,7 +185,9 @@ toast.error("Something went wrong");
               </div>
 
               <div>
-                <label className="block text-sm mb-1 text-gray-600">Available</label>
+                <label className="block text-sm mb-1 text-gray-600">
+                  Available
+                </label>
                 <input
                   type="number"
                   name="available"
@@ -193,7 +203,7 @@ toast.error("Something went wrong");
               disabled={loading}
               className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 rounded-xl transition-all duration-200"
             >
-            {loading ? "Adding..." : "Add Uniform"}
+              {loading ? "Adding..." : "Add Uniform"}
             </button>
           </form>
         </div>

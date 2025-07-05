@@ -9,7 +9,8 @@ export default function Home() {
           Uniform Distribution Dashboard
         </h1>
         <p className="text-lg text-gray-700 mb-10">
-          Seamlessly handle your school's uniform inventory. Add new items or review your current stock with just a click.
+          Seamlessly handle your school's uniform inventory. Add new items or
+          review your current stock with just a click.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-md mx-auto">

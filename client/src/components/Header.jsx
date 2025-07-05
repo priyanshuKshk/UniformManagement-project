@@ -14,19 +14,18 @@ function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Memoized callbacks to avoid unnecessary re-renders
-const { logout } = useAuth(); // custom hook from context
+  const { logout } = useAuth(); // custom hook from context
   const navigate = useNavigate();
 
-const handleLogout = () => {
-  const confirmLogout = window.confirm("Are you sure you want to logout?");
-  if (confirmLogout) {
-    logout();
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    navigate("/login");
-  }
-};
-
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      logout();
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      navigate("/login");
+    }
+  };
 
   const toggleSidebar = useCallback(() => setSidebarOpen((prev) => !prev), []);
 
@@ -42,20 +41,19 @@ const handleLogout = () => {
       {/* ░░ Top bar ░░ */}
       <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-6 py-3 flex items-center justify-between shadow">
         <Link to="/" className="flex items-center gap-3">
-              
-                    <img
-                      src={logo}
-                      alt="guest-house-logo"
-                      className="w-10 h-10 "
-                      style={{
-                        maxWidth: "250px",
-                        maxHeight: "50px",
-                        padding: "4px",
-                        marginRight: "10px",
-                        marginBottom: "2px",
-                      }}
-                    />
-                  
+          <img
+            src={logo}
+            alt="guest-house-logo"
+            className="w-10 h-10 "
+            style={{
+              maxWidth: "250px",
+              maxHeight: "50px",
+              padding: "4px",
+              marginRight: "10px",
+              marginBottom: "2px",
+            }}
+          />
+
           <motion.h1
             className="text-2xl font-semibold tracking-wide"
             initial={{ opacity: 0, y: -8 }}
@@ -85,7 +83,10 @@ const handleLogout = () => {
           <Menu />
         </button>
 
-        <nav aria-label="Main navigation" className="hidden md:flex gap-6 font-medium text-gray-700">
+        <nav
+          aria-label="Main navigation"
+          className="hidden md:flex gap-6 font-medium text-gray-700"
+        >
           {NAV_LINKS.map(({ to, label }) => (
             <Link key={to} to={to} className="hover:text-blue-600">
               {label}
@@ -117,7 +118,11 @@ const handleLogout = () => {
             >
               <div className="p-4 border-b flex justify-between items-center bg-gray-100">
                 <span className="font-bold text-lg">Menu</span>
-                <button onClick={toggleSidebar} className="text-xl" aria-label="Close sidebar">
+                <button
+                  onClick={toggleSidebar}
+                  className="text-xl"
+                  aria-label="Close sidebar"
+                >
                   <X />
                 </button>
               </div>
@@ -125,7 +130,11 @@ const handleLogout = () => {
               <ul className="p-4 space-y-4 font-medium flex-1">
                 {NAV_LINKS.map(({ to, label }) => (
                   <li key={to}>
-                    <Link to={to} onClick={toggleSidebar} className="block hover:text-blue-600">
+                    <Link
+                      to={to}
+                      onClick={toggleSidebar}
+                      className="block hover:text-blue-600"
+                    >
                       {label}
                     </Link>
                   </li>

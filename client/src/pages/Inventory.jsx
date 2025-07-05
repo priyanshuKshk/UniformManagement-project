@@ -55,33 +55,32 @@ export default function InventoryList() {
   };
 
   const updateItem = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const quantity = parseInt(form.quantity) || 0;
-  const allotted = parseInt(form.allotted) || 0;
+    const quantity = parseInt(form.quantity) || 0;
+    const allotted = parseInt(form.allotted) || 0;
 
-  if (quantity < 0) {
-    alert("Quantity cannot be negative");
-    return;
-  }
+    if (quantity < 0) {
+      alert("Quantity cannot be negative");
+      return;
+    }
 
-  if (allotted > quantity) {
-    alert("Allotted cannot be more than quantity");
-    return;
-  }
+    if (allotted > quantity) {
+      alert("Allotted cannot be more than quantity");
+      return;
+    }
 
-  try {
-    await api.put(`/uniforms/${editingId}`, {
-      ...form,
-      available: quantity - allotted,
-    });
-    setEditingId(null);
-    fetchItems();
-  } catch (err) {
-    alert("Update failed");
-  }
-};
-
+    try {
+      await api.put(`/uniforms/${editingId}`, {
+        ...form,
+        available: quantity - allotted,
+      });
+      setEditingId(null);
+      fetchItems();
+    } catch (err) {
+      alert("Update failed");
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -198,22 +197,25 @@ export default function InventoryList() {
                   </h3>
 
                   <div className="flex justify-between text-sm text-gray-600 mb-1">
-                    <p><strong>Size:</strong> {item.size}</p>
-                    <p><strong>₹</strong> {item.costPrice}</p>
+                    <p>
+                      <strong>Size:</strong> {item.size}
+                    </p>
+                    <p>
+                      <strong>₹</strong> {item.costPrice}
+                    </p>
                   </div>
 
-                <div className="mb-3 flex flex-wrap gap-2">
-  <span className="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm">
-    Total: {item.quantity}
-  </span>
-  <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-medium">
-    Allotted: {item.allotted || 0}
-  </span>
-  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
-    Available: {available}
-  </span>
-</div>
-
+                  <div className="mb-3 flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm">
+                      Total: {item.quantity}
+                    </span>
+                    <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-medium">
+                      Allotted: {item.allotted || 0}
+                    </span>
+                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                      Available: {available}
+                    </span>
+                  </div>
 
                   {lowStock && (
                     <p className="text-sm text-red-600 font-semibold mb-2">
