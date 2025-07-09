@@ -51,8 +51,15 @@ export default function InventoryList() {
   };
 
   const handleFormChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const { name, value } = e.target;
+
+  if (["quantity", "allotted", "costPrice"].includes(name) && parseInt(value) < 0) {
+    return;
+  }
+
+  setForm({ ...form, [name]: value });
+};
+
 
   const updateItem = async (e) => {
     e.preventDefault();
