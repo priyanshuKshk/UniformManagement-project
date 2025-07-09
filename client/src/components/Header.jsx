@@ -8,6 +8,8 @@ const NAV_LINKS = [
   { to: "/dashboard", label: "Dashboard" },
   { to: "/add", label: "Add uniform" },
   { to: "/inventory", label: "Inventory" },
+  { to: "/allot", label: "Allot Uniform" },
+  { to: "/allotted", label: "Alloted List" },
 ];
 
 function Header() {

@@ -13,6 +13,8 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./pages/PrivateRoute";
 import './output.css'
 import Signup from "./pages/Signup";
+import AllotUniform from "./pages/AllotUniform";
+import AllotmentList from "./pages/AllotmentList";
 
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -29,7 +31,9 @@ const router = createBrowserRouter([
       { path: "add", element: <AddUniform /> },
       { path: "inventory", element: <InventoryList /> },
       { path: "dashboard", element: <InventoryDashboard /> },
-      { path: "edit/:id", element: <EditUniform /> }
+      { path: "edit/:id", element: <EditUniform /> },
+      { path: "allot", element: <AllotUniform /> }, 
+      { path: "allotted", element: <AllotmentList /> },
     ],
   },
 ]);
