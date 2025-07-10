@@ -19,9 +19,13 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ success: false, message: "Not enough stock" });
     }
 
+     if (uniform.available <=0) {
+    return res.status(400).json({ success: false, message: "Not enough stock" });
+   }
+
     
 // Decrease stock and increase allotted
-uniform.quantity -= quantity;
+uniform.available -= quantity;
 uniform.allotted = (uniform.allotted || 0) + quantity;
 await uniform.save();
 

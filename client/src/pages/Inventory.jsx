@@ -71,6 +71,10 @@ export default function InventoryList() {
       alert("Quantity cannot be negative");
       return;
     }
+    if (available < 0) {
+      alert("available cannot be negative");
+      return;
+    }
 
     if (allotted > quantity) {
       alert("Allotted cannot be more than quantity");
@@ -214,7 +218,7 @@ export default function InventoryList() {
 
                   <div className="mb-3 flex flex-wrap gap-2">
                     <span className="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm">
-                      Total: {item.quantity}
+                      Quantity: {item.quantity}
                     </span>
                     <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-medium">
                       Allotted: {item.allotted || 0}
