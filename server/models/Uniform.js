@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const UniformSchema = new mongoose.Schema({
   itemName: String,
-  size: String.toUpperCase(),
+ size: {
+    type: String,
+    set: (v) => v.toUpperCase(), 
+  },
   costPrice: Number,
   quantity: Number,
   available: {
