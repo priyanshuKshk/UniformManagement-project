@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://uniform-management-project.vercel.app"
+  "https://uniform-management-project.vercel.app",
+  "https://uniformmanagementproject.onrender.com"
 ];
 
 app.use(cors({
