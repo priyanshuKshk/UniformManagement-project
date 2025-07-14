@@ -7,14 +7,27 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-dotenv.config();
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://uniform-management-project.vercel.app"
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
-  credentials: true,
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 }));
 
 app.use(express.json());
-
+dotenv.config();
 // MongoDB Connection
 mongoose
   .connect(process.env.MONGO_URI)
